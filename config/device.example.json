@@ -1,0 +1,8 @@
+{
+  "serial": "YOUR_ADB_SERIAL",
+  "screenWidth": 1080,
+  "screenHeight": 2340,
+  "keyboardBounds": [0, 0, 0, 0],
+  "pinTaps": [],
+  "pinDelayMs": 300
+}
