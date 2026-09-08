@@ -1,12 +1,12 @@
 # [PointerRunner](https://github.com/u6587051/PointerRunner)
 
-PointerRunner runs a screen-driven purchase flow for the Shopee Thailand Android app
-(`com.shopee.th`). Kotlin instrumentation checks the current screen and taps ready
+PointerRunner runs a screen-driven purchase flow for the SPTH Android app
+(`com.SP.th`). Kotlin instrumentation checks the current screen and taps ready
 buttons on the phone. A Python launcher loads device-specific settings and starts
 the test through ADB. Appium is not required to run the flow.
 
 The runner supports product verification, optional product options, checkout total
-validation, scheduled starts, and coordinate-based ShopeePay PIN entry.
+validation, scheduled starts, and coordinate-based SPPay PIN entry.
 **Executing stage 3 submits a real order; stage 9 may authorize a real payment.**
 Payment success is not automatically verified, and flash-sale availability or
 speed is not guaranteed.
@@ -18,7 +18,7 @@ speed is not guaranteed.
 - Android SDK Platform Tools (`adb`) available on your PATH.
 - Python 3.8 or newer; the launcher uses only the standard library.
 - An Android phone running Android 8.0/API 26 or newer, with USB debugging enabled.
-- Shopee Thailand installed and signed in on the phone.
+- SPTH installed and signed in on the phone.
 
 Open this repository in Android Studio and let Gradle sync. Configure the Android
 SDK location through Android Studio or your local `local.properties` file. Run the
@@ -49,7 +49,7 @@ Edit `config/device.local.json`:
 | --- | --- |
 | `serial` | Phone serial reported by `adb devices`. |
 | `screenWidth`, `screenHeight` | Actual display dimensions used by the runner in portrait orientation. |
-| `keyboardBounds` | ShopeePay numeric keyboard bounds as `[left, top, right, bottom]`. |
+| `keyboardBounds` | SPPay numeric keyboard bounds as `[left, top, right, bottom]`. |
 | `pinTaps` | Six `[x, y]` points in PIN entry order, configured for this phone. |
 | `pinDelayMs` | Pause between PIN taps; defaults to 300 ms, allowed range 50–1000 ms. |
 
@@ -58,7 +58,7 @@ bounds. It will not run until you configure it. The Python launcher validates th
 whole file even in preview or checkout-only mode.
 
 Use the phone's UI hierarchy to inspect
-`com.shopee.th:id/keyboard_number_view` and obtain its bounds. Determine the six
+`com.SP.th:id/keyboard_number_view` and obtain its bounds. Determine the six
 points from the actual keyboard displayed on that phone. The keyboard exposes one
 view rather than individual digit labels: the runner can verify its bounds but
 cannot detect shuffled digits. Do not reuse another phone's coordinates blindly.
@@ -99,9 +99,9 @@ always selects preview mode.
 Before execution:
 
 1. Close active Appium/Inspector sessions.
-2. Open the intended Shopee product page and select the variation and quantity.
+2. Open the intended SP product page and select the variation and quantity.
 3. Verify the address and payment method yourself.
-4. Keep the phone unlocked, in portrait, with Shopee in the foreground.
+4. Keep the phone unlocked, in portrait, with SP in the foreground.
 
 Replace the product substring and budget with your intended values:
 
@@ -147,7 +147,7 @@ phone; inspect its clock with `adb shell date`.
 Start the launcher ahead of the sale and wait for `ARMED`. Leave the intended
 product page open. At the deadline, the runner checks fresh product/button state
 before tapping. The target is when readiness checking starts, not a guarantee of
-when Shopee's server receives an order. `--at` and `--start-delay-ms` cannot be used
+when SP's server receives an order. `--at` and `--start-delay-ms` cannot be used
 together.
 
 ## 6. Run the full purchase flow
@@ -229,9 +229,9 @@ benchmark or successful-payment verification is included.
 | `PIN entry requires per-device pinConfig` | Use `scripts/run_flow.py`; raw ADB commands do not load the JSON automatically. |
 | `Start time passed or is more than 24h away` | Check the phone clock and choose a future target within 24 hours, or use a start delay. |
 | Display/orientation mismatch | Match the configured dimensions and use portrait orientation. |
-| Timeout at a screen stage | Check the current screen and selectors; Shopee UI changes may require code updates. |
+| Timeout at a screen stage | Check the current screen and selectors; SP UI changes may require code updates. |
 | Checkout total outside budget | Verify the final amount, including delivery, and the intended budget. |
-| PIN screen/layout not ready | Check keyboard bounds and that the ShopeePay PIN screen matches the expected UI. |
+| PIN screen/layout not ready | Check keyboard bounds and that the SPPay PIN screen matches the expected UI. |
 | PIN field not provably empty | Inspect the phone manually; the runner will not clear or retry partially entered PINs. |
 
 For multiline shell commands, a continuation backslash must be the last character
