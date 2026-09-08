@@ -78,7 +78,7 @@ adb shell am instrument -w \
   com.hym.pointer.test/androidx.test.runner.AndroidJUnitRunner
 ```
 
-Install the app and test APK beforehand. The phone must be unlocked, Shopee in
+Install the app and test APK beforehand. The phone must be unlocked, SP in
 foreground, on the intended product page, with the configured display size in portrait. Select the intended
 variation and quantity in advance. The runner verifies product text and maximum
 checkout total, not variation, quantity, address or payment method. Selectors come
